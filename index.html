@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejemplo 1 - ImÃ¡genes con descripciÃ³n | ejemplo-1-imagenes</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #F5F5F5; color: #1F1F1F; margin: 0; padding: 20px; }
+    .comparar { display: flex; flex-wrap: wrap; gap: 20px; }
+    .tarjeta { background: white; border-radius: 10px; padding: 16px; width: 320px; }
+    .mal { border-top: 8px solid #B3261E; }
+    .bien { border-top: 8px solid #2E7D32; }
+    img { width: 100%; border-radius: 8px; }
+    button { font-size: 18px; padding: 10px 16px; margin-top: 10px; cursor: pointer; }
+    .lector { background: #1F1F1F; color: #FFFFFF; padding: 12px; border-radius: 8px; font-family: monospace; min-height: 40px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <p><small>Carpeta: ejemplo-1-imagenes</small></p>
+  <h1>Ejemplo 1: imÃ¡genes con descripciÃ³n</h1>
+  <p>Pulsa Â«EscucharÂ»: la computadora leerÃ¡ la tarjeta como lo hace un lector de pantalla.</p>
+  <div class="comparar">
+    <div class="tarjeta mal">
+      <h2>AsÃ­ NO</h2>
+      <img id="foto-mal" src="ejemplo-1-imagenes/lomo.jpg">
+      <p>Plato del dÃ­a: S/ 14.00</p>
+      <button id="escuchar-mal">Escuchar</button>
+      <div class="lector" id="texto-mal"></div>
+    </div>
+    <div class="tarjeta bien">
+      <h2>AsÃ­ SÃ</h2>
+      <img id="foto-bien" src="ejemplo-1-imagenes/lomo.jpg" alt="Lomo saltado con arroz y papas fritas">
+      <p>Plato del dÃ­a: S/ 14.00</p>
+      <button id="escuchar-bien">Escuchar</button>
+      <div class="lector" id="texto-bien"></div>
+    </div>
+  </div>
+  <p>La tarjeta roja anuncia Â«Imagen: lomo punto jpgÂ»; la verde describe el plato. Prueba cambiar el alt por Â«fotoÂ» y vuelve a escuchar: el texto alternativo debe decir quÃ© se ve.</p>
+  <script>
+    function leer(texto, cajaId) {
+      document.getElementById(cajaId).textContent = texto;
+      var voz = new SpeechSynthesisUtterance(texto);
+      voz.lang = 'es-ES';
+      speechSynthesis.speak(voz);
+    }
+    function describir(idFoto) {
+      var foto = document.getElementById(idFoto);
+      var descripcion = foto.getAttribute('alt');
+      if (descripcion) return 'Imagen: ' + descripcion;
+      return 'Imagen: lomo punto jpg';
+    }
+    document.getElementById('escuchar-mal').addEventListener('click', function () {
+      leer(describir('foto-mal') + '. Plato del dÃ­a: 14 soles.', 'texto-mal');
+    });
+    document.getElementById('escuchar-bien').addEventListener('click', function () {
+      leer(describir('foto-bien') + '. Plato del dÃ­a: 14 soles.', 'texto-bien');
+    });
+  </script>
+</body>
+</html>
+
